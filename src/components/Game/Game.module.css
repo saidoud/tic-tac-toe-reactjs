@@ -29,3 +29,13 @@
 .start:hover {
   width: 155px;
 }
+.level {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.level select {
+  padding: 10px;
+  background-color: #f3f3f3;
+  font-weight: bold;
+}
