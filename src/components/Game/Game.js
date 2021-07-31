@@ -8,6 +8,7 @@ function Game() {
   const [stepNumber, setStepNumber] = useState(0);
   const [next, setNext] = useState(true);
   const winner = calculateWinner(history[stepNumber]);
+
   const x0 = next ? "X" : "O";
   //option Level
   const [isComputer, setIsComputer] = useState(true);
@@ -21,8 +22,10 @@ function Game() {
       const historyPoint = history.slice(0, stepNumber + 1);
       const current = historyPoint[stepNumber];
       const squares = [...current];
+
       //return if player win or occuped
       if (winner || squares[index]) return;
+
       //select square
       squares[index] = x0;
       setHistory([...historyPoint, squares]);
@@ -34,26 +37,39 @@ function Game() {
   //Level Game Function Easy Medium Hard
   const levelGameTicTac = () => {
     if (isComputer === false && x0 === "O") {
-      //Easy Levl
+      const historyPoint = history.slice(0, stepNumber + 1);
+      const current = historyPoint[stepNumber];
+      const squares = [...current];
+      //Easy Level
       if (levelGame === "easy") {
-        for (let index = 0; index < 9; index++) {
-          const historyPoint = history.slice(0, stepNumber + 1);
-          const current = historyPoint[stepNumber];
-          const squares = [...current];
-          //return if player win or occuped
-          if (winner || squares[index]) continue;
-          //select square
-          squares[index] = x0;
-          setHistory([...historyPoint, squares]);
-          setStepNumber(historyPoint.length);
-          setNext(!next);
+        //return if player win or occuped
+        if (winner) return;
+        //Generate Number Between 0 and 7
+        let index = Math.trunc(Math.random() * 8);
+
+        while (squares[index]) {
+          index = Math.trunc(Math.random() * 8);
         }
+        //select square
+        squares[index] = x0;
+        setHistory([...historyPoint, squares]);
+        setStepNumber(historyPoint.length);
+        setNext(!next);
+        console.log(history[stepNumber]);
       }
-      //Medium Level
-      else if (levelGame === "medium") {
-      }
+
       //Hard Level
-      else {
+      else if (levelGame === "hard") {
+        let index = Math.trunc(Math.random() * 8);
+
+        while (squares[index]) {
+          index = Math.trunc(Math.random() * 8);
+        }
+        squares[index] = x0;
+        setHistory([...historyPoint, squares]);
+        setStepNumber(historyPoint.length);
+        setNext(!next);
+        console.log(history[stepNumber]);
       }
     }
   };
@@ -68,7 +84,6 @@ function Game() {
       setIsComputer(!isComputer);
     } else if (level === "levelgame") {
       setLevelGame(e.target.value);
-      console.log(e.target.value);
     }
   };
 
@@ -94,7 +109,7 @@ function Game() {
           disabled={isComputer}
         >
           <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
+
           <option value="hard">Hard</option>
         </select>
       </div>
